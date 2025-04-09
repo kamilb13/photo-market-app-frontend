@@ -1,0 +1,42 @@
+.home {
+  text-align: center;
+  padding: 20px;
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.photo-card {
+  width: 250px;
+}
+
+.photo-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+mat-card {
+  width: 300px;
+  margin: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+mat-card-title {
+  font-weight: bold;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
