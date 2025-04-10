@@ -1,22 +1,12 @@
 <div class="home">
   <h1>Photo Marketplace</h1>
   <div class="gallery">
-<!--    <mat-card *ngFor="let photo of photos" class="photo-card">-->
-<!--      <img mat-card-image [src]="photo.url" [alt]="photo.title">-->
-<!--      <mat-card-title>{{ photo.title }}</mat-card-title>-->
-<!--      <mat-card-subtitle>{{ photo.price }} PLN</mat-card-subtitle>-->
-<!--      <mat-card-actions>-->
-<!--        <button mat-raised-button color="primary" (click)="buyPhoto(photo)">-->
-<!--          Kup-->
-<!--        </button>-->
-<!--      </mat-card-actions>-->
-<!--    </mat-card>-->
     <mat-card *ngFor="let photo of photos">
-      <mat-card-image [src]="photo.filePath" alt="{{ photo.title }}"></mat-card-image>
+      <img mat-card-image [src]="'http://localhost:8080/get-photo/' + photo.file_path" alt="Photo">
       <mat-card-title>{{ photo.title }}</mat-card-title>
       <mat-card-subtitle>{{ photo.description }}</mat-card-subtitle>
       <mat-card-actions>
-        <button mat-button (click)="buyPhoto(photo)">Kup</button>
+        <button mat-raised-button (click)="openDialog('0ms', '0ms')">Buy photo</button>
       </mat-card-actions>
     </mat-card>
   </div>

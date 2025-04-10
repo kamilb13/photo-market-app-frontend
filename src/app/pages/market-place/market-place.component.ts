@@ -5,13 +5,15 @@ import {MatButton} from '@angular/material/button';
 import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {PhotoService} from '../../services/photo.service';
 import {Subscription} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogBuyPhotoComponent} from '../../components/dialog-buy-photo/dialog-buy-photo.component';
 
 export interface Photo {
   id: number;
   title: string;
   description: string;
   amount: number;
-  filePath: string;
+  file_path: string;
   uploadDate: string;
   userId: number;
 }
@@ -37,20 +39,25 @@ export class MarketPlaceComponent implements OnInit {
 
   photos: Photo[] = [];
   subscription: Subscription = new Subscription();
+  readonly dialog = inject(MatDialog);
 
   ngOnInit() {
     console.log('ngOnInit');
     this.subscription = this.photoService.getPhotos().subscribe(response => {
       this.photos = response;
-      //console.log(response);
-      this.photos = response.map(photo => {
-        photo.filePath = `http://localhost:8080/uploads/${photo.filePath}`;
-        return photo;
-      });
+      console.log(this.photos);
     });
   }
 
   buyPhoto(photo: any) {
-    alert(`Kupiono zdjęcie: ${photo.title} za ${photo.price} PLN!`);
+    alert(`Kupiono zdjęcie: ${photo.title} za ${photo.amount} PLN!`);
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DialogBuyPhotoComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }
