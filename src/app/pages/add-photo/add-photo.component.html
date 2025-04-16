@@ -1,0 +1,39 @@
+<div class="center-container">
+
+  <mat-card>
+    <form #photoForm="ngForm">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Tytuł</mat-label>
+        <input matInput name="title" [(ngModel)]="form.title" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Opis</mat-label>
+        <input matInput name="description" [(ngModel)]="form.description" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Cena</mat-label>
+        <input matInput type="number" name="amount" [(ngModel)]="form.amount" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <!--TODO to ma byc id usera z context ale na razie tak-->
+        <mat-label>ID użytkownika</mat-label>
+        <input matInput type="number" name="userId" [(ngModel)]="form.userId" required>
+      </mat-form-field>
+      <div style="margin-bottom: 16px;">
+        <button mat-raised-button color="primary" (click)="fileInput.click()" type="button">
+          Wybierz zdjęcie
+        </button>
+        <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+      </div>
+      <div style="display: flex; justify-content: center">
+        <img *ngIf="previewUrl" [src]="previewUrl" alt="Podgląd"
+             style="max-width: 300px; margin-bottom: 16px; display: block;">
+      </div>
+      <button mat-raised-button color="accent"
+              (click)="upload()"
+              [disabled]="!selectedFile || !photoForm.form.valid">
+        Wyślij
+      </button>
+    </form>
+  </mat-card>
+</div>
