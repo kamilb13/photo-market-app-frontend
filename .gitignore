@@ -6,6 +6,9 @@
 /out-tsc
 /bazel-out
 
+src/app/app.config.ts
+src/app/auth/auth.config.ts
+
 # Node
 /node_modules
 npm-debug.log

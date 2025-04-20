@@ -1,0 +1,34 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-title>Rejestracja</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Imie</mat-label>
+          <input matInput formControlName="name" type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Nazwisko</mat-label>
+          <input matInput formControlName="surname" type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Hasło</mat-label>
+          <input matInput formControlName="password" type="password">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Adres e-mail</mat-label>
+          <input matInput formControlName="email" type="email">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Numer telefonu</mat-label>
+          <input matInput formControlName="phoneNumber" type="number">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+          Zarejestruj się
+        </button>
+      </form>
+      <mat-divider></mat-divider>
+      <asl-google-signin-button></asl-google-signin-button>
+    </mat-card-content>
+  </mat-card>
+</div>
