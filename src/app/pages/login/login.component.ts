@@ -13,6 +13,11 @@ import {MatDivider} from '@angular/material/divider';
 import {HttpClient} from '@angular/common/http';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
+interface ResponseBackend {
+  jwtToken: string;
+  refreshToken: string;
+}
+
 @Component({
   standalone: true,
   selector: 'app-login',
@@ -41,7 +46,13 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private authServiceOAuth: SocialAuthService, private fb: FormBuilder, private authService: AuthService, private http: HttpClient) {
+  // constructor(private authServiceOAuth: SocialAuthService, private fb: FormBuilder, private authService: AuthService, private http: HttpClient) {
+  //   this.loginForm = this.fb.group({
+  //     email: ['', [Validators.required, Validators.email]],
+  //     password: ['', [Validators.required, Validators.minLength(6)]],
+  //   });
+  // }
+  constructor(private fb: FormBuilder, private authService: AuthService, private http: HttpClient) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -49,23 +60,24 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authServiceOAuth.authState.subscribe((user) => {
-      this.user = user;
-      console.log(user);
-      if (user && user.idToken) {
-        this.http.post('http://localhost:8080/auth/google', {idToken: user.idToken})
-          .subscribe({
-            next: (response) => {
-              console.log('Odpowiedź backendu:', response);
-              this.backendResponse = response;
-            },
-            error: (error) => {
-              console.error('Błąd backendu:', error);
-              this.backendError = error;
-            }
-          });
-      }
-    });
+    // this.authServiceOAuth.authState.subscribe((user) => {
+    //   this.user = user;
+    //   console.log(user);
+    //   if (user && user.idToken) {
+    //     this.http.post<ResponseBackend>('http://localhost:8080/auth/google', {idToken: user.idToken})
+    //       .subscribe({
+    //         next: (response) => {
+    //           console.log('Odpowiedź backendu:', response);
+    //           this.backendResponse = response;
+    //           // localStorage.setItem("token", response.jwtToken)
+    //         },
+    //         error: (error) => {
+    //           console.error('Błąd backendu:', error);
+    //           this.backendError = error;
+    //         }
+    //       });
+    //   }
+    // });
   }
 
   onSubmit() {

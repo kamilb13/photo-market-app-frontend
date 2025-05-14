@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  GoogleSigninButtonModule,
-  SocialAuthService,
-  SocialUser
-} from '@abacritt/angularx-social-login';
+// import {
+//   GoogleSigninButtonModule,
+//   SocialAuthService,
+//   SocialUser
+// } from '@abacritt/angularx-social-login';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
@@ -16,7 +16,7 @@ import {HttpClient} from '@angular/common/http';
   standalone: true,
   selector: 'app-register',
     imports: [
-        GoogleSigninButtonModule,
+        // GoogleSigninButtonModule,
         MatButton,
         MatCard,
         MatCardContent,
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(
-    private authServiceOAuth: SocialAuthService,
+    // private authServiceOAuth: SocialAuthService,
     private fb: FormBuilder,
     private authService: AuthService,
     private http: HttpClient

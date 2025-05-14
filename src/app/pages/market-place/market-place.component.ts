@@ -2,7 +2,6 @@ import {Component, inject, OnInit} from '@angular/core';
 import {MatCard, MatCardActions, MatCardImage, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {CommonModule} from '@angular/common';
 import {MatButton} from '@angular/material/button';
-import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {PhotoService} from '../../services/photo.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
@@ -13,9 +12,10 @@ export interface Photo {
   title: string;
   description: string;
   amount: number;
-  file_path: string;
+  file_path: any;
   uploadDate: string;
   userId: number;
+  imageUrl?: string;
 }
 
 @Component({
@@ -35,17 +35,24 @@ export interface Photo {
 })
 export class MarketPlaceComponent implements OnInit {
 
-  constructor(private photoService: PhotoService) {}
+  constructor(private photoService: PhotoService) {
+  }
 
   photos: Photo[] = [];
   subscription: Subscription = new Subscription();
   readonly dialog = inject(MatDialog);
 
   ngOnInit() {
-    console.log('ngOnInit');
     this.subscription = this.photoService.getPhotos().subscribe(response => {
       this.photos = response;
       console.log(this.photos);
+
+      this.photos.forEach((photo) => {
+        this.photoService.getPhotoDetails(photo.file_path).subscribe(blob => {
+          console.log(photo);
+          photo.imageUrl = URL.createObjectURL(blob);
+        });
+      });
     });
   }
 

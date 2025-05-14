@@ -1,14 +1,14 @@
 <div class="home">
-  <h1>Photo Marketplace</h1>
+  <h1>User page</h1>
+  <p>User photos:</p>
   <div class="gallery">
     <mat-card *ngFor="let photo of photos">
       <img mat-card-image [src]="photo.imageUrl" alt="Photo">
       <mat-card-title>{{ photo.title }}</mat-card-title>
       <mat-card-subtitle>{{ photo.description }}</mat-card-subtitle>
       <mat-card-subtitle>{{ photo.amount }} PLN</mat-card-subtitle>
-      <mat-card-actions>
-        <button mat-raised-button (click)="openDialog('0ms', '0ms')">Buy photo</button>
-      </mat-card-actions>
     </mat-card>
   </div>
 </div>
+
+

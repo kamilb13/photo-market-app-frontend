@@ -1,6 +1,6 @@
 <div class="login-container">
   <mat-card>
-    <mat-card-title>Logowanie</mat-card-title>
+    <mat-card-title style="padding: 20px">Logowanie</mat-card-title>
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
@@ -15,9 +15,11 @@
           Zaloguj się
         </button>
       </form>
-      <mat-divider></mat-divider>
-      <asl-google-signin-button></asl-google-signin-button>
+      <mat-divider style="margin-top: 20px"></mat-divider>
+<!--      <asl-google-signin-button></asl-google-signin-button>-->
+      <button mat-raised-button color="primary" routerLink="/register" routerLinkActive="active">
+        Rejestracja
+      </button>
     </mat-card-content>
-    <a mat-button routerLink="/register" routerLinkActive="active">Rejestracja</a>
   </mat-card>
 </div>
