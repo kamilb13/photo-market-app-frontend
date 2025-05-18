@@ -3,6 +3,8 @@
     <a mat-button routerLink="/" routerLinkActive="active">Strona główna</a>
     <a mat-button routerLink="/marketplace" routerLinkActive="active">Marketplace</a>
     <a mat-button routerLink="/photo" routerLinkActive="active">Dodaj zdjęcie</a>
-    <a mat-flat-button routerLink="/user" routerLinkActive="active">{{user}}</a>
+    <a mat-flat-button routerLink="/user" routerLinkActive="active">
+      {{ user || 'Twoje konto' }}
+    </a>
   </div>
 </mat-toolbar>

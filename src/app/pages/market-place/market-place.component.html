@@ -7,7 +7,7 @@
       <mat-card-subtitle>{{ photo.description }}</mat-card-subtitle>
       <mat-card-subtitle>{{ photo.amount }} PLN</mat-card-subtitle>
       <mat-card-actions>
-        <button mat-raised-button (click)="openDialog('0ms', '0ms')">Buy photo</button>
+        <button mat-raised-button (click)="openDialog(photo)">Buy photo</button>
       </mat-card-actions>
     </mat-card>
   </div>

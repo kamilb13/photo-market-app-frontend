@@ -56,15 +56,10 @@ export class MarketPlaceComponent implements OnInit {
     });
   }
 
-  buyPhoto(photo: any) {
-    alert(`Kupiono zdjęcie: ${photo.title} za ${photo.amount} PLN!`);
-  }
-
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(photo: Photo): void {
     this.dialog.open(DialogBuyPhotoComponent, {
       width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
+      data: photo
     });
   }
 }
