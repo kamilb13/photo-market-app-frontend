@@ -2,12 +2,21 @@
   <h1>Photo Marketplace</h1>
   <div class="gallery">
     <mat-card *ngFor="let photo of photos">
-      <img mat-card-image [src]="photo.imageUrl" alt="Photo">
+      <div class="photo-wrapper">
+        <img mat-card-image [src]="photo.imageUrl" alt="Photo" class="photo-img">
+        <div *ngIf="photo.user_id === currentUserId" class="watermark">Your Photo</div>
+        <div *ngIf="photo.user_id !== currentUserId && !isPhotoPurchased(photo.id)" class="watermark">Buy photo</div>
+      </div>
       <mat-card-title>{{ photo.title }}</mat-card-title>
       <mat-card-subtitle>{{ photo.description }}</mat-card-subtitle>
       <mat-card-subtitle>{{ photo.amount }} PLN</mat-card-subtitle>
+      <mat-card-subtitle>Autor: {{ photo.user_id }}</mat-card-subtitle>
       <mat-card-actions>
-        <button mat-raised-button (click)="openDialog(photo)">Buy photo</button>
+        <button *ngIf="photo.user_id !== currentUserId && !isPhotoPurchased(photo.id)" mat-raised-button
+                (click)="openDialog(photo)">
+          Buy photo
+        </button>
+        <span *ngIf="isPhotoPurchased(photo.id)">Already purchased</span>
       </mat-card-actions>
     </mat-card>
   </div>

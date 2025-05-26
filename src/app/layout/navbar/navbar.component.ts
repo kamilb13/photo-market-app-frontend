@@ -45,17 +45,20 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.token = localStorage.getItem("jwtToken");
-    if (this.token) {
-      const decoded = jwtDecode<TokenPayload>(this.token);
-      this.userService.getFullUsername(decoded.sub).subscribe({
-        next: (response: { username: string }) => {
-          this.user = response.username;
-        },
-        error: (err) => {
-          console.error('Błąd podczas pobierania username:', err);
-        }
-      });
+    if (typeof window !== 'undefined') {
+      const item = localStorage.getItem('token');
+      this.token = localStorage.getItem("jwtToken");
+      if (this.token) {
+        const decoded = jwtDecode<TokenPayload>(this.token);
+        this.userService.getFullUsername(decoded.sub).subscribe({
+          next: (response: { username: string }) => {
+            this.user = response.username;
+          },
+          error: (err) => {
+            console.error('Błąd podczas pobierania username:', err);
+          }
+        });
+      }
     }
   }
 }

@@ -8,6 +8,16 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
+import {jwtDecode} from 'jwt-decode';
+import {Subscription} from 'rxjs';
+import {PhotoService} from '../../services/photo.service';
+import {Photo} from '../../models/photo.model';
+
+interface TokenPayload {
+  sub: string;
+  exp: number;
+  userId: number;
+}
 
 @Component({
   selector: 'app-dialog-buy-photo',
@@ -23,10 +33,47 @@ import {MatButton} from '@angular/material/button';
   styleUrl: './dialog-buy-photo.component.scss'
 })
 export class DialogBuyPhotoComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  token: string | null;
+  purchasedPhotos: Photo[] = [];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private photoService: PhotoService) {
+    this.token = "";
+  }
 
   buyPhoto() {
     //TODO purchase logic
-    console.log("Kupiłeś zdjęcie" + this.data.title);
+    console.log("Kupiłeś zdjęcie: " + this.data.id);
+    this.buyPhotoByUser(this.data.id)
+    window.location.reload(); //TODO ????
+  }
+
+  buyPhotoByUser(photoId: number) {
+    this.token = localStorage.getItem('jwtToken');
+    if (!this.token) {
+      console.error('User not authenticated!');
+      return;
+    }
+    const decoded = jwtDecode<TokenPayload>(this.token);
+    const userId = decoded.userId;
+    this.photoService.buyPhoto(userId, photoId).subscribe({
+      next: () => {
+        console.log('Photo purchased successfully');
+        this.loadPurchasedPhotos(userId);
+      },
+      error: err => {
+        console.error('Failed to buy photo:', err);
+      }
+    });
+  }
+
+  loadPurchasedPhotos(userId: number) {
+    this.photoService.getPurchasedPhotosByUser(userId).subscribe(response => {
+      this.purchasedPhotos = response;
+      this.purchasedPhotos.forEach(photo => {
+        this.photoService.getPhotoDetails(photo.file_path).subscribe(blob => {
+          photo.imageUrl = URL.createObjectURL(blob);
+        });
+      });
+    });
   }
 }

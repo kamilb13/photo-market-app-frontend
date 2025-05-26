@@ -40,3 +40,26 @@ mat-card-actions {
   display: flex;
   justify-content: flex-end;
 }
+
+
+.photo-wrapper {
+  position: relative;
+  display: inline-block;
+
+  .photo-img {
+    width: 100%;
+    display: block;
+  }
+
+  .watermark {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 4px 8px;
+    font-size: 22px;
+    font-weight: bold;
+    pointer-events: none;
+  }
+}

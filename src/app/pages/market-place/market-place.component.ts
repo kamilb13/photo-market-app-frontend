@@ -6,17 +6,8 @@ import {PhotoService} from '../../services/photo.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogBuyPhotoComponent} from '../../components/dialog-buy-photo/dialog-buy-photo.component';
-
-export interface Photo {
-  id: number;
-  title: string;
-  description: string;
-  amount: number;
-  file_path: any;
-  uploadDate: string;
-  userId: number;
-  imageUrl?: string;
-}
+import {jwtDecode} from 'jwt-decode';
+import {Photo} from '../../models/photo.model';
 
 @Component({
   selector: 'app-market-place',
@@ -41,19 +32,37 @@ export class MarketPlaceComponent implements OnInit {
   photos: Photo[] = [];
   subscription: Subscription = new Subscription();
   readonly dialog = inject(MatDialog);
+  currentUserId: number | null = null;
+  purchasedPhotos: Photo[] = [];
+  purchasedPhotoIds = new Set<number>();
 
   ngOnInit() {
-    this.subscription = this.photoService.getPhotos().subscribe(response => {
-      this.photos = response;
-      console.log(this.photos);
-
-      this.photos.forEach((photo) => {
-        this.photoService.getPhotoDetails(photo.file_path).subscribe(blob => {
-          console.log(photo);
-          photo.imageUrl = URL.createObjectURL(blob);
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        const decoded = jwtDecode<{ userId: number }>(token);
+        console.log(decoded);
+        this.currentUserId = decoded.userId;
+        this.photoService.getPurchasedPhotosByUser(this.currentUserId).subscribe(purchased => {
+          this.purchasedPhotos = purchased;
+          this.purchasedPhotoIds = new Set(purchased.map(p => p.id));
+        });
+      }
+      this.subscription = this.photoService.getPhotos().subscribe(response => {
+        this.photos = response;
+        console.log(this.photos);
+        this.photos.forEach((photo) => {
+          this.photoService.getPhotoDetails(photo.file_path).subscribe(blob => {
+            console.log(photo);
+            photo.imageUrl = URL.createObjectURL(blob);
+          });
         });
       });
-    });
+    }
+  }
+
+  isPhotoPurchased(photoId: number): boolean {
+    return this.purchasedPhotoIds.has(photoId);
   }
 
   openDialog(photo: Photo): void {
