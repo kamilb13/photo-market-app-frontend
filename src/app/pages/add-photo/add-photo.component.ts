@@ -5,6 +5,14 @@ import {MatButton} from '@angular/material/button';
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {jwtDecode} from 'jwt-decode';
+import {UserService} from '../../services/user.service';
+
+interface TokenPayload {
+  sub: string;
+  exp: number;
+  userId: number;
+}
 
 @Component({
   selector: 'app-add-photo',
@@ -29,8 +37,13 @@ export class AddPhotoComponent {
   };
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+  user: string;
+  token: string | null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {
+    this.token = "";
+    this.user = "";
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -41,17 +54,23 @@ export class AddPhotoComponent {
   }
 
   upload() {
-    if (!this.selectedFile) return;
-    const formData = new FormData();
-    formData.append('title', this.form.title);
-    formData.append('description', this.form.description);
-    formData.append('amount', String(this.form.amount));
-    formData.append('userId', String(this.form.userId));
-    formData.append('file', this.selectedFile, this.selectedFile.name);
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ':', pair[1]);
+    if (typeof window !== 'undefined') {
+      const item = localStorage.getItem('token');
+      this.token = localStorage.getItem("jwtToken");
+      if (this.token) {
+        const decoded = jwtDecode<TokenPayload>(this.token);
+        if (!this.selectedFile) return;
+        const formData = new FormData();
+        formData.append('title', this.form.title);
+        formData.append('description', this.form.description);
+        formData.append('amount', String(this.form.amount));
+        formData.append('userId', String(decoded.userId));
+        formData.append('file', this.selectedFile, this.selectedFile.name);
+        for (let pair of formData.entries()) {
+          console.log(pair[0]+ ':', pair[1]);
+        }
+        this.http.post('http://localhost:8080/add-photo', formData).subscribe();
+      }
     }
-    this.http.post('http://localhost:8080/add-photo', formData).subscribe();
   }
-
 }
