@@ -8,6 +8,7 @@ import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {jwtDecode} from 'jwt-decode';
 import {UserService} from '../../services/user.service';
+import {NgIf} from '@angular/common';
 
 interface TokenPayload {
   sub: string;
@@ -29,7 +30,8 @@ interface TokenPayload {
     MatListItem,
     RouterLink,
     RouterLinkActive,
-    MatAnchor
+    MatAnchor,
+    NgIf
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
@@ -39,26 +41,23 @@ export class NavbarComponent implements OnInit {
   user: string;
   token: string | null;
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService, private authservice: AuthService) {
     this.user = "";
     this.token = "";
   }
 
   ngOnInit() {
-    if (typeof window !== 'undefined') {
-      const item = localStorage.getItem('token');
-      this.token = localStorage.getItem("jwtToken");
-      if (this.token) {
-        const decoded = jwtDecode<TokenPayload>(this.token);
-        this.userService.getFullUsername(decoded.sub).subscribe({
-          next: (response: { username: string }) => {
-            this.user = response.username;
-          },
-          error: (err) => {
-            console.error('Błąd podczas pobierania username:', err);
-          }
-        });
-      }
-    }
+
   }
+
+  onLogout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
+  get canLogout(): boolean {
+    console.log(this.authservice.isLoggedIn())
+    return this.authservice.isLoggedIn();
+  }
+
 }

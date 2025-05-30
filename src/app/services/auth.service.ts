@@ -85,6 +85,12 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.loggedInSubject.value;
+    if (typeof window !== 'undefined') {
+      let item = localStorage.getItem("jwtToken");
+      if (item) {
+        return true;
+      }
+    }
+    return false;
   }
 }

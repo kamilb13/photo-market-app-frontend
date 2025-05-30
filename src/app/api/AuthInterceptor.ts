@@ -11,7 +11,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const isAuthRequest = req.url.includes('/auth/login') || req.url.includes('/auth/register');
+    const isAuthRequest = //req.url.includes('/auth/login') || req.url.includes('/auth/register');
+      req.url.includes('/auth/login') ||
+      req.url.includes('/auth/register') ||
+      req.url.includes('/home');
+
+    console.log(req.url);
 
     if (!isAuthRequest && typeof window !== 'undefined') {
       const token = localStorage.getItem('jwtToken');

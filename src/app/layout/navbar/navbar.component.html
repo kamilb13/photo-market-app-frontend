@@ -4,7 +4,9 @@
     <a mat-button routerLink="/marketplace" routerLinkActive="active">Marketplace</a>
     <a mat-button routerLink="/photo" routerLinkActive="active">Dodaj zdjęcie</a>
     <a mat-flat-button routerLink="/user" routerLinkActive="active">
-      {{ user || 'Twoje konto' }}
+      <!--      {{ user || 'Twoje konto' }}-->
+      {{ 'Twoje konto' }}
     </a>
+    <a *ngIf="canLogout" mat-flat-button (click)="onLogout()" routerLinkActive="active">Wyloguj</a>
   </div>
 </mat-toolbar>
