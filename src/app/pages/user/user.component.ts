@@ -40,6 +40,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.token = localStorage.getItem('jwtToken');
     if (this.token) {
+      // console.log("token", this.token);
       const decoded = jwtDecode<TokenPayload>(this.token);
       this.subscription.add(
         this.photoService.getUserPhotos(decoded.userId).subscribe(response => {

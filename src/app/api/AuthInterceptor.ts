@@ -11,9 +11,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (typeof window !== 'undefined') {
+    const isPublic = !req.url.includes('/auth/google');
+    if (!isPublic && typeof window !== 'undefined') {
       const token = localStorage.getItem('jwtToken');
-      console.log(token)
+      console.log(token);
       if (token) {
         req = req.clone({
           setHeaders: {
@@ -26,8 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
-          console.log(localStorage.getItem('jwtToken'))
-          alert('Brak dostępu do zasobów! Zaloguj się.');
+          alert('Brak dostępu! Zaloguj się.');
           this.router.navigate(['/login']);
         }
         return throwError(() => error);
