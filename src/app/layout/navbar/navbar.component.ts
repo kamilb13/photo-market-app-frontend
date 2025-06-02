@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit {
   }
 
   get canLogout(): boolean {
-    console.log(this.authservice.isLoggedIn())
+    //console.log(this.authservice.isLoggedIn())
     return this.authservice.isLoggedIn();
   }
 

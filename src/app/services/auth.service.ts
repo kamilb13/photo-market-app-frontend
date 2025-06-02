@@ -31,13 +31,13 @@ export class AuthService {
       email: email,
       password: password
     }
-    console.log(loginData);
+    // console.log(loginData);
     this.http.post<ResponseBackend>('http://localhost:8080/auth/login', loginData, {
       withCredentials: true
     })
       .subscribe({
         next: (response) => {
-          console.log('Odpowiedź backendu:', response);
+          // console.log('Odpowiedź backendu:', response);
           this.backendResponse = response;
           if (typeof window !== 'undefined') {
             localStorage.setItem("jwtToken", response.jwtToken);
@@ -65,7 +65,7 @@ export class AuthService {
       email: email,
       phoneNumber: phoneNumber,
     }
-    console.log(registerData);
+    // console.log(registerData);
     this.http.post('http://localhost:8080/auth/register', registerData)
       .subscribe({
         next: (response) => {

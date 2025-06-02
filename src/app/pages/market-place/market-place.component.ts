@@ -41,7 +41,7 @@ export class MarketPlaceComponent implements OnInit {
       const token = localStorage.getItem('jwtToken');
       if (token) {
         const decoded = jwtDecode<{ userId: number }>(token);
-        console.log(decoded);
+        // console.log(decoded);
         this.currentUserId = decoded.userId;
         this.photoService.getPurchasedPhotosByUser(this.currentUserId).subscribe(purchased => {
           this.purchasedPhotos = purchased;
@@ -50,10 +50,10 @@ export class MarketPlaceComponent implements OnInit {
       }
       this.subscription = this.photoService.getPhotos().subscribe(response => {
         this.photos = response;
-        console.log(this.photos);
+        // console.log(this.photos);
         this.photos.forEach((photo) => {
           this.photoService.getPhotoDetails(photo.file_path).subscribe(blob => {
-            console.log(photo);
+            // console.log(photo);
             photo.imageUrl = URL.createObjectURL(blob);
           });
         });
