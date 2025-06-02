@@ -12,12 +12,7 @@ import {jwtDecode} from 'jwt-decode';
 import {Subscription} from 'rxjs';
 import {PhotoService} from '../../services/photo.service';
 import {Photo} from '../../models/photo.model';
-
-interface TokenPayload {
-  sub: string;
-  exp: number;
-  userId: number;
-}
+import {TokenPayload} from '../../models/tokenPayload.model';
 
 @Component({
   selector: 'app-dialog-buy-photo',

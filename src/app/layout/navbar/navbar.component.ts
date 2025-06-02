@@ -10,12 +10,6 @@ import {jwtDecode} from 'jwt-decode';
 import {UserService} from '../../services/user.service';
 import {NgIf} from '@angular/common';
 
-interface TokenPayload {
-  sub: string;
-  exp: number;
-  userId?: number;
-}
-
 @Component({
   selector: 'app-navbar',
   standalone: true,

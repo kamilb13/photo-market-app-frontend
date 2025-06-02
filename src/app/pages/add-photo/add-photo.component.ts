@@ -7,12 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {jwtDecode} from 'jwt-decode';
 import {UserService} from '../../services/user.service';
-
-interface TokenPayload {
-  sub: string;
-  exp: number;
-  userId: number;
-}
+import {TokenPayload} from '../../models/tokenPayload.model';
 
 @Component({
   selector: 'app-add-photo',

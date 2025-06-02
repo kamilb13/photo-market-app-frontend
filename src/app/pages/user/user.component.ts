@@ -8,12 +8,7 @@ import {MatCard, MatCardActions, MatCardImage, MatCardSubtitle, MatCardTitle} fr
 import {NgForOf, NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {Photo} from '../../models/photo.model';
-
-interface TokenPayload {
-  sub: string;
-  exp: number;
-  userId: number;
-}
+import {TokenPayload} from '../../models/tokenPayload.model';
 
 @Component({
   selector: 'app-user',
