@@ -9,19 +9,17 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../services/auth.service';
-import {MatDivider} from '@angular/material/divider';
+// import {MatDivider} from '@angular/material/divider';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
   standalone: true,
   selector: 'app-register',
     imports: [
-        // GoogleSigninButtonModule,
         MatButton,
         MatCard,
         MatCardContent,
         MatCardTitle,
-        MatDivider,
         MatFormField,
         MatInput,
         MatLabel,

@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {response} from 'express';
-import {blob} from 'node:stream/consumers';
 import {PhotoService} from '../../services/photo.service';
 import {jwtDecode} from 'jwt-decode';
 import {Subscription} from 'rxjs';
 import {MatCard, MatCardActions, MatCardImage, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {NgForOf, NgIf} from '@angular/common';
-import {MatButton} from '@angular/material/button';
 import {Photo} from '../../models/photo.model';
 import {TokenPayload} from '../../models/tokenPayload.model';
 
@@ -14,9 +11,7 @@ import {TokenPayload} from '../../models/tokenPayload.model';
   selector: 'app-user',
   standalone: true,
   imports: [
-    MatButton,
     MatCard,
-    MatCardActions,
     MatCardImage,
     MatCardSubtitle,
     MatCardTitle,

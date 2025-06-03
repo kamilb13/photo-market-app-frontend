@@ -61,9 +61,9 @@ export class AddPhotoComponent {
         formData.append('amount', String(this.form.amount));
         formData.append('userId', String(decoded.userId));
         formData.append('file', this.selectedFile, this.selectedFile.name);
-        for (let pair of formData.entries()) {
-          console.log(pair[0]+ ':', pair[1]);
-        }
+        // for (let pair of formData.entries()) {
+        //   console.log(pair[0]+ ':', pair[1]);
+        // }
         this.http.post('http://localhost:8080/add-photo', formData).subscribe();
       }
     }

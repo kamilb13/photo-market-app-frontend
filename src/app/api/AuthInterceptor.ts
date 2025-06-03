@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const isPublic = req.url.includes('/auth/google');
     if (!isPublic && typeof window !== 'undefined') {
       const token = localStorage.getItem('jwtToken');
-      console.log(token);
+      // console.log(token);
       if (token) {
         req = req.clone({
           setHeaders: {

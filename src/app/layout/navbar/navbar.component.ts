@@ -1,12 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {MatAnchor, MatIconButton} from '@angular/material/button';
-import {MatListItem, MatNavList} from '@angular/material/list';
+import {MatAnchor} from '@angular/material/button';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
-import {jwtDecode} from 'jwt-decode';
 import {UserService} from '../../services/user.service';
 import {NgIf} from '@angular/common';
 
@@ -14,14 +10,7 @@ import {NgIf} from '@angular/common';
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    MatIcon,
     MatToolbar,
-    MatMenu,
-    MatMenuItem,
-    MatIconButton,
-    MatMenuTrigger,
-    MatNavList,
-    MatListItem,
     RouterLink,
     RouterLinkActive,
     MatAnchor,

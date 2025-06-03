@@ -24,7 +24,7 @@ export class SuccessComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const idPhoto = Number(params['idPhoto']);
-      console.log('idPhoto po płatności:', idPhoto);
+      // console.log('idPhoto po płatności:', idPhoto);
       if (idPhoto) {
         this.buyPhotoByUser(idPhoto);
       }

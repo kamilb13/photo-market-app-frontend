@@ -73,7 +73,7 @@ export class AuthService {
     }).pipe(tap((response) => {
       this.backendResponse = response;
       if (typeof window !== 'undefined') {
-        console.log(response)
+        // console.log(response)
         localStorage.setItem("jwtToken", response.jwtToken);
         localStorage.setItem("refreshToken", response.refreshToken);
         const decoded = jwtDecode<TokenPayload>(response.jwtToken)

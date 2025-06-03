@@ -38,7 +38,7 @@ export class DialogBuyPhotoComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private photoService: PhotoService) {
     this.token = "";
-    console.log(this.data)
+    // console.log(this.data)
     this.productId = this.data.id;
     this.photoName = this.data.title;
     this.photoPrice = this.data.amount;

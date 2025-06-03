@@ -26,7 +26,7 @@ export class PaymentComponent {
       productName: productName,
       productPrice: productPrice * 100
     }
-    console.log(request);
+    // console.log(request);
     this.http.post<any>('http://localhost:8080/create-checkout-session', request).subscribe(res => {
       stripe?.redirectToCheckout({sessionId: res.id});
     });

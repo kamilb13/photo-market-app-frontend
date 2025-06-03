@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
     this.authServiceOAuth.authState.subscribe((user) => {
       this.user = user;
       if (user && user.idToken) {
-        console.log(user.idToken);
+        // console.log(user.idToken);
         this.authService.loginWithGoogle(user).subscribe({
           next: (response) => {
             this.backendResponse = response;
