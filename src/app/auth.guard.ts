@@ -9,8 +9,10 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(): boolean {
+    if (typeof window === 'undefined') {
+      return false;
+    }
     const token = localStorage.getItem('jwtToken');
-
     if (token) {
       return true;
     } else {

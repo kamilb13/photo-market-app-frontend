@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const isPublic = !req.url.includes('/auth/google');
+    const isPublic = req.url.includes('/auth/google');
     if (!isPublic && typeof window !== 'undefined') {
       const token = localStorage.getItem('jwtToken');
       console.log(token);
@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
         });
       }
     }
-
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
