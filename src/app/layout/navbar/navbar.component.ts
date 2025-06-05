@@ -34,8 +34,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.clear();
-    this.router.navigate(['/home']);
+    this.authservice.logout()
   }
 
   get canLogout(): boolean {

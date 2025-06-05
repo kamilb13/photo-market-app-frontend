@@ -111,4 +111,11 @@ export class AuthService {
     }
     return false;
   }
+
+  logout(): void {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("refreshToken");
+    this.loggedInSubject.next(false);
+    this.router.navigate(['/login'], { replaceUrl: true });
+  }
 }

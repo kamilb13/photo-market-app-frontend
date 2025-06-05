@@ -26,8 +26,10 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
-          alert('Brak dostępu! Zaloguj się.');
-          this.router.navigate(['/login']);
+          if (this.router.url !== '/login') {
+            alert('Brak dostępu! Zaloguj się.');
+            this.router.navigate(['/login']);
+          }
         }
         return throwError(() => error);
       })
