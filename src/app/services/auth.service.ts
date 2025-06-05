@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import { jwtDecode } from "jwt-decode";
 import {Router} from '@angular/router';
 import {SocialUser} from '@abacritt/angularx-social-login'
+import {User} from '../models/user.model';
+import {AuthResponse} from '../models/auth.model';
 
 interface ResponseBackend {
   jwtToken: string;
@@ -25,6 +27,21 @@ export class AuthService {
   private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {
+  }
+
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
+  setUser(user: User) {
+    this.currentUserSubject.next(user);
+  }
+
+  getUser(): User | null {
+    return this.currentUserSubject.value;
+  }
+
+  clearUser() {
+    this.currentUserSubject.next(null);
   }
 
   loginWithEmail(email: string, password: string): Observable<any> {
@@ -110,6 +127,28 @@ export class AuthService {
       }
     }
     return false;
+  }
+
+  loadUserFromToken(): void {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      const decoded = jwtDecode<TokenPayload>(token);
+      const userId = decoded.userId;
+      if (userId) {
+        this.http.post<User>('http://localhost:8080/auth/me?id=' + userId, {}, {
+          withCredentials: true
+        }).subscribe({
+          next: (user) => {
+            this.setUser(user);
+            console.log('Użytkownik załadowany z tokenu:', user);
+          },
+          error: (err) => {
+            console.error('Błąd podczas ładowania użytkownika z tokenu:', err);
+            this.clearUser();
+          }
+        });
+      }
+    }
   }
 
   logout(): void {
