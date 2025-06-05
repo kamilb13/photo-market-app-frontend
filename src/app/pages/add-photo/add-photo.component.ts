@@ -65,6 +65,7 @@ export class AddPhotoComponent {
         //   console.log(pair[0]+ ':', pair[1]);
         // }
         this.http.post('http://localhost:8080/add-photo', formData).subscribe();
+        alert("Dodano zdjęcie")
       }
     }
   }
