@@ -1,6 +1,10 @@
 <div class="home">
-  <h1>User page</h1>
-  <p>User uploaded photos:</p>
+  <h1>Twoje konto</h1>
+  <p>Twoje zdjęcia:</p>
+  <div *ngIf="photos.length === 0">
+    <p><i><strong>Brak zdjęć.</strong></i></p>
+  </div>
+
   <div class="gallery">
     <mat-card *ngFor="let photo of photos">
       <img mat-card-image [src]="photo.imageUrl" alt="Photo">
@@ -9,9 +13,10 @@
       <mat-card-subtitle>{{ photo.amount }} PLN</mat-card-subtitle>
     </mat-card>
   </div>
-  <p>User purchased photos:</p>
+
+  <p>Kupione zdjęcia:</p>
   <div *ngIf="purchasedPhotos.length === 0">
-    <p><i><strong>Brak zakupionych zdjęć.</strong></i></p>
+    <p><i><strong>Brak zdjęć.</strong></i></p>
   </div>
 
   <div class="gallery" *ngIf="purchasedPhotos.length > 0">

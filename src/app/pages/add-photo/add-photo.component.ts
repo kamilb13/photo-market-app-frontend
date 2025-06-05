@@ -8,6 +8,7 @@ import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {jwtDecode} from 'jwt-decode';
 import {UserService} from '../../services/user.service';
 import {TokenPayload} from '../../models/tokenPayload.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-photo',
@@ -35,7 +36,7 @@ export class AddPhotoComponent {
   user: string;
   token: string | null;
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(private router: Router, private http: HttpClient, private userService: UserService) {
     this.token = "";
     this.user = "";
   }
@@ -66,6 +67,7 @@ export class AddPhotoComponent {
         // }
         this.http.post('http://localhost:8080/add-photo', formData).subscribe();
         alert("Dodano zdjęcie")
+        this.router.navigate(['/marketplace']);
       }
     }
   }
