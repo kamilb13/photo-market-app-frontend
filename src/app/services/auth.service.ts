@@ -130,23 +130,25 @@ export class AuthService {
   }
 
   loadUserFromToken(): void {
-    const token = localStorage.getItem('jwtToken');
-    if (token) {
-      const decoded = jwtDecode<TokenPayload>(token);
-      const userId = decoded.userId;
-      if (userId) {
-        this.http.post<User>('http://localhost:8080/auth/me?id=' + userId, {}, {
-          withCredentials: true
-        }).subscribe({
-          next: (user) => {
-            this.setUser(user);
-            console.log('Użytkownik załadowany z tokenu:', user);
-          },
-          error: (err) => {
-            console.error('Błąd podczas ładowania użytkownika z tokenu:', err);
-            this.clearUser();
-          }
-        });
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        const decoded = jwtDecode<TokenPayload>(token);
+        const userId = decoded.userId;
+        if (userId) {
+          this.http.post<User>('http://localhost:8080/auth/me?id=' + userId, {}, {
+            withCredentials: true
+          }).subscribe({
+            next: (user) => {
+              this.setUser(user);
+              console.log('Użytkownik załadowany z tokenu:', user);
+            },
+            error: (err) => {
+              console.error('Błąd podczas ładowania użytkownika z tokenu:', err);
+              this.clearUser();
+            }
+          });
+        }
       }
     }
   }
