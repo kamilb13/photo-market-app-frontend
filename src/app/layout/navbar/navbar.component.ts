@@ -5,6 +5,8 @@ import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {UserService} from '../../services/user.service';
 import {NgIf} from '@angular/common';
+import {User} from '../../models/user.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -23,23 +25,30 @@ export class NavbarComponent implements OnInit {
 
   user: string;
   token: string | null;
+  currentUser: User | null = null;
+  subscription: Subscription = new Subscription();
 
-  constructor(private router: Router, private userService: UserService, private authservice: AuthService) {
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {
     this.user = "";
     this.token = "";
   }
 
   ngOnInit() {
-
+    this.subscription.add(
+      this.authService.currentUser$.subscribe(user => {
+          this.currentUser = user;
+        }
+      )
+    )
   }
 
   onLogout() {
-    this.authservice.logout()
+    this.authService.logout()
   }
 
   get canLogout(): boolean {
     //console.log(this.authservice.isLoggedIn())
-    return this.authservice.isLoggedIn();
+    return this.authService.isLoggedIn();
   }
 
 }
