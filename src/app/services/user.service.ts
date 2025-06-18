@@ -22,10 +22,17 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  getFullUsername(email: string): Observable<{ username: string }> {
+  getFullUsernameByEmail(email: string): Observable<{ username: string }> {
     return this.http.post<{ username: string }>(
       `${this.apiUrl}/get-username`,
       {email: email},
+    );
+  }
+
+  getFullUsernameById(id: number): Observable<{ username: string }> {
+    return this.http.post<{ username: string }> (
+      `${this.apiUrl}/get-username/${id}`,
+      {id: id}
     );
   }
 }
