@@ -2,16 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-export interface Photo {
-  id: number;
-  title: string;
-  description: string;
-  amount: number;
-  filePath: string;
-  uploadDate: string;
-  userId: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })

@@ -11,19 +11,19 @@
     <mat-card *ngFor="let photo of filteredPhotos()">
       <div class="photo-wrapper">
         <img mat-card-image [src]="photo.imageUrl" alt="Photo" class="photo-img">
-        <div *ngIf="photo.user_id === currentUserId" class="watermark">Your Photo</div>
-        <div *ngIf="photo.user_id !== currentUserId && !isPhotoPurchased(photo.id)" class="watermark">Buy photo</div>
+        <div *ngIf="photo.owner_id === currentUserId" class="watermark">Twoje zdjęcie</div>
+        <div *ngIf="photo.owner_id !== currentUserId && !isPhotoPurchased(photo.id)" class="watermark">Kup zdjęcie</div>
+        <div *ngIf="photo.owner_id !== currentUserId && isPhotoPurchased(photo.id)" class="watermark">Kupiono</div>
       </div>
       <mat-card-title>{{ photo.title }}</mat-card-title>
       <mat-card-subtitle>{{ photo.description }}</mat-card-subtitle>
       <mat-card-subtitle>{{ photo.amount }} PLN</mat-card-subtitle>
-      <mat-card-subtitle>Autor: {{ photo.user_id }}</mat-card-subtitle>
+      <mat-card-subtitle>Autor: {{ photo.owner_username }}</mat-card-subtitle>
       <mat-card-actions>
-        <button *ngIf="photo.user_id !== currentUserId && !isPhotoPurchased(photo.id)" mat-raised-button
+        <button *ngIf="photo.owner_id !== currentUserId && !isPhotoPurchased(photo.id)" mat-raised-button
                 (click)="openDialog(photo)">
-          Buy photo
+          Kup zdjęcie
         </button>
-        <span *ngIf="isPhotoPurchased(photo.id)">Already purchased</span>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -5,6 +5,7 @@ export interface Photo {
   amount: number;
   file_path: any;
   uploadDate: string;
-  user_id: number;
+  owner_id: number;
+  owner_username: string;
   imageUrl?: string;
 }

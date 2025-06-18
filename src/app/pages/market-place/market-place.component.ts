@@ -10,6 +10,7 @@ import {jwtDecode} from 'jwt-decode';
 import {Photo} from '../../models/photo.model';
 import {MatFormField, MatInput} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-market-place',
