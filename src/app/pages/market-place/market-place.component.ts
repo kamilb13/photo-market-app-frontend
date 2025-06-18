@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {DialogBuyPhotoComponent} from '../../components/dialog-buy-photo/dialog-buy-photo.component';
 import {jwtDecode} from 'jwt-decode';
 import {Photo} from '../../models/photo.model';
+import {MatFormField, MatInput} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-market-place',
@@ -20,6 +22,9 @@ import {Photo} from '../../models/photo.model';
     MatCardSubtitle,
     MatCardImage,
     MatButton,
+    MatFormField,
+    MatInput,
+    FormsModule
   ],
   templateUrl: './market-place.component.html',
   styleUrl: './market-place.component.scss'
@@ -35,6 +40,7 @@ export class MarketPlaceComponent implements OnInit {
   currentUserId: number | null = null;
   purchasedPhotos: Photo[] = [];
   purchasedPhotoIds = new Set<number>();
+  searchText: string = "";
 
   ngOnInit() {
     if (typeof window !== 'undefined') {
@@ -59,6 +65,18 @@ export class MarketPlaceComponent implements OnInit {
         });
       });
     }
+  }
+
+  filteredPhotos(): any {
+    if (!this.searchText) {
+      return this.photos;
+    }
+
+    const lowerSearch = this.searchText.toLowerCase();
+    return this.photos.filter(photo =>
+      photo.title.toLowerCase().includes(lowerSearch) ||
+      photo.description.toLowerCase().includes(lowerSearch)
+    )
   }
 
   isPhotoPurchased(photoId: number): boolean {

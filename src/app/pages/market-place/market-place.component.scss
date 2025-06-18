@@ -21,6 +21,17 @@
   justify-content: center;
 }
 
+.search-bar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+}
+
 mat-card {
   width: 300px;
   margin: 10px;

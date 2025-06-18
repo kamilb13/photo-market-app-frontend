@@ -1,7 +1,14 @@
 <div class="home">
   <h1>Photo Marketplace</h1>
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-field">
+      <input matInput placeholder="Tytuł zdjęcia" [(ngModel)]="searchText">
+    </mat-form-field>
+  </div>
+
+
   <div class="gallery">
-    <mat-card *ngFor="let photo of photos">
+    <mat-card *ngFor="let photo of filteredPhotos()">
       <div class="photo-wrapper">
         <img mat-card-image [src]="photo.imageUrl" alt="Photo" class="photo-img">
         <div *ngIf="photo.user_id === currentUserId" class="watermark">Your Photo</div>
