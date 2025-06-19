@@ -20,7 +20,7 @@ export class PaymentComponent {
   }
 
   async buy(productId: number, productName: string, productPrice: number) {
-    const stripe = await loadStripe('pk_test_51RVaADPaD58wH9BGjInz3iQEs1x0JP4VxxJgE14Rici6TbfKMq52ceKrFDZoyNiB5qnYtBUNOHO7waUHAr2axf6q00GHtF9O6i');
+    const stripe = await loadStripe('pk_test_51RXmBcB2AMrJiQaHI0GYm1LeexD0325THC54f6hJXUeBEDc3XGnHOFjegLJpSc7zgj2DLpMyRV9L2Vf6FZfDC6Yb0017fej66O');
     const request = {
       productId: productId,
       productName: productName,
