@@ -6,7 +6,10 @@ import {AuthService} from '../../services/auth.service';
 import {UserService} from '../../services/user.service';
 import {NgIf} from '@angular/common';
 import {User} from '../../models/user.model';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {selectUser} from '../../store/auth.selector';
+import {Store} from '@ngrx/store';
+import {LoggedUser} from '../../models/loggedUser.model';
 
 @Component({
   selector: 'app-navbar',

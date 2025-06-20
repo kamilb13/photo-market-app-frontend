@@ -57,7 +57,6 @@ export class MarketPlaceComponent implements OnInit {
       }
       this.subscription = this.photoService.getPhotos().subscribe(response => {
         this.photos = response;
-        // console.log(this.photos);
         this.photos.forEach((photo) => {
           this.photoService.getPhotoDetails(photo.file_path).subscribe(blob => {
             // console.log(photo);
@@ -72,7 +71,6 @@ export class MarketPlaceComponent implements OnInit {
     if (!this.searchText) {
       return this.photos;
     }
-
     const lowerSearch = this.searchText.toLowerCase();
     return this.photos.filter(photo =>
       photo.title.toLowerCase().includes(lowerSearch) ||

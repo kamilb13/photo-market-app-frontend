@@ -1,13 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {PhotoService} from '../../services/photo.service';
 import {jwtDecode} from 'jwt-decode';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {MatCard, MatCardActions, MatCardImage, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
-import {NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {Photo} from '../../models/photo.model';
 import {TokenPayload} from '../../models/tokenPayload.model';
 import {User} from '../../models/user.model';
 import {AuthService} from '../../services/auth.service';
+import {selectUser} from '../../store/auth.selector';
+import {LoggedUser} from '../../models/loggedUser.model';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +21,8 @@ import {AuthService} from '../../services/auth.service';
     MatCardSubtitle,
     MatCardTitle,
     NgForOf,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
@@ -30,12 +34,16 @@ export class UserComponent implements OnInit {
   photos: Photo[] = [];
   purchasedPhotos: Photo[] = [];
   currentUser: User | null = null;
+  user$: Observable<LoggedUser | null>;
 
-  constructor(private photoService: PhotoService, private authService: AuthService) {
+  constructor(private photoService: PhotoService, private authService: AuthService, private store: Store) {
     this.token = "";
+    this.user$ = this.store.select(selectUser);
   }
 
   ngOnInit() {
+    this.store.select(selectUser).subscribe(user => console.log('User in store:', user));
+
     this.subscription.add(
       this.authService.currentUser$.subscribe(user => {
         this.currentUser = user;

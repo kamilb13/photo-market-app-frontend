@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import {Router} from '@angular/router';
 import {SocialUser} from '@abacritt/angularx-social-login'
 import {User} from '../models/user.model';
 import {AuthResponse} from '../models/auth.model';
+import {Store} from '@ngrx/store';
+import {setUser} from '../store/auth.actions';
 
 interface ResponseBackend {
   jwtToken: string;
@@ -26,7 +28,7 @@ export class AuthService {
   backendError: any = null;
   private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private store: Store) {
   }
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -62,6 +64,7 @@ export class AuthService {
             localStorage.setItem("refreshToken", response.refreshToken);
             if (response.jwtToken) {
               const decoded = jwtDecode<TokenPayload>(response.jwtToken);
+              this.store.dispatch(setUser({loggedUser: {email: decoded.sub, userId: decoded.userId}}))
               console.log("Zalogowany użytkownik:", decoded);
             }
           }
@@ -77,7 +80,7 @@ export class AuthService {
 
   loginWithGoogle(socialUser: SocialUser): Observable<any> {
     const idToken = socialUser.idToken;
-    return this.http.post<ResponseBackend>('http://localhost:8080/auth/google', { idToken }, {
+    return this.http.post<ResponseBackend>('http://localhost:8080/auth/google', {idToken}, {
       withCredentials: true
     }).pipe(tap((response) => {
       this.backendResponse = response;
@@ -157,6 +160,6 @@ export class AuthService {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("refreshToken");
     this.loggedInSubject.next(false);
-    this.router.navigate(['/login'], { replaceUrl: true });
+    this.router.navigate(['/login'], {replaceUrl: true});
   }
 }

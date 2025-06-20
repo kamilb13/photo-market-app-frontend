@@ -1,5 +1,6 @@
 <div class="home">
   <h1>Witaj {{this.currentUser?.name}} {{this.currentUser?.surname}}</h1>
+  <h3>Email: {{ (user$ | async)?.email }}</h3>
   <p>Twoje zdjęcia:</p>
   <div *ngIf="photos.length === 0">
     <p><i><strong>Brak zdjęć.</strong></i></p>

@@ -2,11 +2,9 @@
   <h1>Photo Marketplace</h1>
   <div class="search-bar">
     <mat-form-field appearance="outline" class="search-field">
-      <input matInput placeholder="Tytuł zdjęcia" [(ngModel)]="searchText">
+      <input matInput placeholder="Wyszukaj po tytule zdjęcia" [(ngModel)]="searchText">
     </mat-form-field>
   </div>
-
-
   <div class="gallery">
     <mat-card *ngFor="let photo of filteredPhotos()">
       <div class="photo-wrapper">

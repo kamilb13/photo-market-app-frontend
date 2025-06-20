@@ -7,7 +7,7 @@ import {AuthService} from './services/auth.service';
   standalone: true,
   imports: [ DashboardComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'photo-market-app-frontend';
