@@ -3,6 +3,7 @@ export interface Photo {
   title: string;
   description: string;
   amount: number;
+  category: string;
   file_path: any;
   uploadDate: string;
   owner_id: number;

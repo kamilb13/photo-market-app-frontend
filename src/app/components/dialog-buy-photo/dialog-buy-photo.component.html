@@ -1,10 +1,9 @@
-<h2 mat-dialog-title>Confirm Purchase</h2>
+<h2 mat-dialog-title>Potwierdź zakup</h2>
 <mat-dialog-content>
-  <p>Are you sure you want to buy "{{ data.title }}" for {{ data.amount }} PLN?</p>
+  <p>Czy na pewno chcesz kupić "{{ data.title }}" za {{ data.amount }} PLN?</p>
   <img [src]="data.imageUrl" alt="Photo" width="100%">
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>No</button>
-<!--  <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="buyPhoto()">Yes</button>-->
+  <button mat-button mat-dialog-close>Nie</button>
   <app-payment [productId]="this.productId" [productName]="this.photoName" [productPrice]="this.photoPrice" />
 </mat-dialog-actions>

@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatCard} from '@angular/material/card';
 import {HttpClient} from '@angular/common/http';
 import {MatButton} from '@angular/material/button';
 import {NgIf} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {jwtDecode} from 'jwt-decode';
 import {UserService} from '../../services/user.service';
 import {TokenPayload} from '../../models/tokenPayload.model';
 import {Router} from '@angular/router';
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
+import {map, Observable, startWith} from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import {CommonModule} from '@angular/common';
+
 
 @Component({
   selector: 'app-add-photo',
@@ -19,26 +24,57 @@ import {Router} from '@angular/router';
     FormsModule,
     MatFormField,
     MatLabel,
-    MatInput
+    MatInput,
+    ReactiveFormsModule,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatOption,
+    AsyncPipe,
+    CommonModule
   ],
   templateUrl: './add-photo.component.html',
   styleUrl: './add-photo.component.scss'
 })
-export class AddPhotoComponent {
+export class AddPhotoComponent implements OnInit {
   form = {
     title: '',
     description: '',
     amount: null,
+    category: null,
     userId: null
   };
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   user: string;
   token: string | null;
+  categories: any[] = [];
+  filteredCategories: Observable<string[]> | undefined;
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) {
     this.token = "";
     this.user = "";
+  }
+
+  categoryControl = new FormControl();
+
+  ngOnInit() {
+    this.http.get<string[]>('http://localhost:8080/categories').subscribe(data => {
+      this.categories = data;
+
+      this.filteredCategories = this.categoryControl.valueChanges.pipe(
+        startWith(''),
+        map(value=> this._filterCategory(value || ''))
+      )
+    })
+
+    this.categoryControl.valueChanges.subscribe(value => {
+      this.form.category = value;
+    })
+  }
+
+  _filterCategory(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.categories.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onFileSelected(event: Event) {
@@ -60,6 +96,7 @@ export class AddPhotoComponent {
         formData.append('title', this.form.title);
         formData.append('description', this.form.description);
         formData.append('amount', String(this.form.amount));
+        formData.append('category', String(this.form.category))
         formData.append('userId', String(decoded.userId));
         formData.append('file', this.selectedFile, this.selectedFile.name);
         // for (let pair of formData.entries()) {

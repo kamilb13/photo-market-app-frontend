@@ -36,6 +36,10 @@ export class PhotoService {
     return this.http.get<Photo[]>(`http://localhost:8080/get-purchased-photos/${userId}`);
   }
 
+  getCategories(): Observable<any> {
+    return this.http.get(`http://localhost:8080/categories`);
+  }
+
   buyPhoto(userId: number, photoId: number): Observable<any> {
     const body: BuyPhotoRequestDto = { userId, photoId };
     return this.http.post('http://localhost:8080/buy-photo', body);

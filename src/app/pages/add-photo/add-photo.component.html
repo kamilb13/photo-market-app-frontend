@@ -14,11 +14,28 @@
         <mat-label>Cena</mat-label>
         <input matInput type="number" name="amount" [(ngModel)]="form.amount" required>
       </mat-form-field>
-<!--      <mat-form-field appearance="fill" style="width: 100%;">-->
-<!--        &lt;!&ndash;TODO to ma byc id usera z context ale na razie tak&ndash;&gt;-->
-<!--        <mat-label>ID użytkownika</mat-label>-->
-<!--        <input matInput type="number" name="userId" [(ngModel)]="form.userId" required>-->
-<!--      </mat-form-field>-->
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Kategoria</mat-label>
+        <input
+          type="text"
+          name="category"
+          matInput
+          [formControl]="categoryControl"
+          [matAutocomplete]="autoCategory"
+          required
+        >
+        <mat-autocomplete #autoCategory="matAutocomplete">
+          <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <!--      <mat-form-field appearance="fill" style="width: 100%;">-->
+      <!--        &lt;!&ndash;TODO to ma byc id usera z context ale na razie tak&ndash;&gt;-->
+      <!--        <mat-label>ID użytkownika</mat-label>-->
+      <!--        <input matInput type="number" name="userId" [(ngModel)]="form.userId" required>-->
+      <!--      </mat-form-field>-->
       <div style="margin-bottom: 16px;">
         <button mat-raised-button color="primary" (click)="fileInput.click()" type="button">
           Wybierz zdjęcie
