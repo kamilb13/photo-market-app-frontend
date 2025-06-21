@@ -8,9 +8,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {DialogBuyPhotoComponent} from '../../components/dialog-buy-photo/dialog-buy-photo.component';
 import {jwtDecode} from 'jwt-decode';
 import {Photo} from '../../models/photo.model';
-import {MatFormField, MatInput} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from '../../services/user.service';
+import {MatOption, MatSelect, MatSelectTrigger} from '@angular/material/select';
 
 @Component({
   selector: 'app-market-place',
@@ -25,7 +26,12 @@ import {UserService} from '../../services/user.service';
     MatButton,
     MatFormField,
     MatInput,
-    FormsModule
+    FormsModule,
+    MatSelect,
+    ReactiveFormsModule,
+    MatOption,
+    MatSelectTrigger,
+    MatLabel
   ],
   templateUrl: './market-place.component.html',
   styleUrl: './market-place.component.scss'
@@ -42,6 +48,8 @@ export class MarketPlaceComponent implements OnInit {
   purchasedPhotos: Photo[] = [];
   purchasedPhotoIds = new Set<number>();
   searchText: string = "";
+  category = new FormControl();
+  categories: string[] = [];
 
   ngOnInit() {
     if (typeof window !== 'undefined') {
@@ -64,19 +72,28 @@ export class MarketPlaceComponent implements OnInit {
           });
         });
       });
+      this.photoService.getCategories().subscribe(categories => {
+        this.categories = categories;
+      })
+
     }
   }
 
-  filteredPhotos(): any {
-    if (!this.searchText) {
-      return this.photos;
-    }
-    const lowerSearch = this.searchText.toLowerCase();
-    return this.photos.filter(photo =>
-      photo.title.toLowerCase().includes(lowerSearch) ||
-      photo.description.toLowerCase().includes(lowerSearch)
-    )
+  filteredPhotos(): Photo[] {
+    const search = this.searchText.toLowerCase();
+    const selectedCategories: string[] = this.category.value || [];
+
+    return this.photos.filter(photo => {
+      const matchesSearch = photo.title.toLowerCase().includes(search) ||
+        photo.description.toLowerCase().includes(search);
+
+      const matchesCategory = selectedCategories.length === 0 ||
+        selectedCategories.includes(photo.category);
+
+      return matchesSearch && matchesCategory;
+    });
   }
+
 
   isPhotoPurchased(photoId: number): boolean {
     return this.purchasedPhotoIds.has(photoId);

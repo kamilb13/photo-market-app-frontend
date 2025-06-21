@@ -4,7 +4,25 @@
     <mat-form-field appearance="outline" class="search-field">
       <input matInput placeholder="Wyszukaj po tytule zdjęcia" [(ngModel)]="searchText">
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Kategorie:</mat-label>
+      <mat-select [formControl]="category" multiple>
+        <mat-select-trigger>
+          {{category.value?.[0] || ''}}
+          @if ((category.value?.length || 0) > 1) {
+            <span class="example-additional-selection">
+          (+{{(category.value?.length || 0) - 1}} {{category.value?.length === 2 ? 'other' : 'others'}})
+        </span>
+          }
+        </mat-select-trigger>
+        @for (category of categories; track categories) {
+          <mat-option [value]="category">{{ category }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
+
   <div class="gallery">
     <mat-card *ngFor="let photo of filteredPhotos()">
       <div class="photo-wrapper">
@@ -16,6 +34,7 @@
       <mat-card-title>{{ photo.title }}</mat-card-title>
       <mat-card-subtitle>{{ photo.description }}</mat-card-subtitle>
       <mat-card-subtitle>{{ photo.amount }} PLN</mat-card-subtitle>
+      <mat-card-subtitle>Kategoria: {{ photo.category }}</mat-card-subtitle>
       <mat-card-subtitle>Autor: {{ photo.owner_username }}</mat-card-subtitle>
       <mat-card-actions>
         <button *ngIf="photo.owner_id !== currentUserId && !isPhotoPurchased(photo.id)" mat-raised-button
