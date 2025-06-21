@@ -11,6 +11,7 @@ import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../services/auth.service';
 // import {MatDivider} from '@angular/material/divider';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   standalone: true,
@@ -35,7 +36,8 @@ export class RegisterComponent implements OnInit {
     // private authServiceOAuth: SocialAuthService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -55,6 +57,7 @@ export class RegisterComponent implements OnInit {
         .subscribe({
           next: response => {
             console.log(response);
+            this.router.navigate(['login']);
           },
           error: error => {
             console.log(error);
