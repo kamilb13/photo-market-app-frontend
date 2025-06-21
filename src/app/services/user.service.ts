@@ -14,14 +14,14 @@ export class UserService {
 
   getFullUsernameByEmail(email: string): Observable<{ username: string }> {
     return this.http.post<{ username: string }>(
-      `${this.apiUrl}/get-username`,
+      `${this.apiUrl}/username`,
       {email: email},
     );
   }
 
   getFullUsernameById(id: number): Observable<{ username: string }> {
     return this.http.post<{ username: string }> (
-      `${this.apiUrl}/get-username/${id}`,
+      `${this.apiUrl}/username/${id}`,
       {id: id}
     );
   }
