@@ -1,25 +1,35 @@
 import {UserService} from './user.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('UserService', () => {
-  let service: UserService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [UserService],
+      providers: [
+        provideHttpClientTesting(),
+        UserService
+      ]
     })
+    userService = TestBed.inject(UserService);
   })
 
   it('should return full username for given email', () => {
-    const testEmail = 'user@example.com'
-    const mockResponse = { username: 'user'};
+    const testEmail = 'abc@abc';
+    const mockResponse = {username: 'abc abc'};
 
-    service.getFullUsernameByEmail(testEmail).subscribe(response => {
+    userService.getFullUsernameByEmail(testEmail).subscribe(response => {
       expect(response).toEqual(mockResponse);
     })
-
   })
 
+  it('should return full username for given id', () => {
+    const testId = 1;
+    const mockResponse = {username: 'abc@abc'};
+
+    userService.getFullUsernameById(testId).subscribe(response => {
+      expect(response).toEqual(mockResponse);
+    })
+  })
 })
