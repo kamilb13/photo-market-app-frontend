@@ -29,7 +29,7 @@ describe('UserService', () => {
 
     const req = httpMock.expectOne('http://localhost:8080/username');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({ email: testEmail });
+    expect(req.request.body).toEqual({email: testEmail});
     req.flush(mockResponse);
   })
 

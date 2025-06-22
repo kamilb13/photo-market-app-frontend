@@ -112,13 +112,13 @@ describe('PhotoService', () => {
 
     const req = httpMock.expectOne(`http://localhost:8080/buy-photo`);
     expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual({ userId: testUserId, photoId: testPhotoId });
+    expect(req.request.body).toEqual({userId: testUserId, photoId: testPhotoId});
     req.flush(mockResponse);
   })
 
   it('should return details of photo with given filename', () => {
     const testFilename = "/home/user/photo.jpg";
-    const mockBlob = new Blob([], { type: 'image/jpeg' });
+    const mockBlob = new Blob([], {type: 'image/jpeg'});
 
     photoService.getPhotoDetails(testFilename).subscribe(response => {
       expect(response).toEqual(mockBlob)

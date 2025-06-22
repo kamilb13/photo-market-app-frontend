@@ -11,7 +11,7 @@ import {TokenPayload} from '../../models/tokenPayload.model';
 import {Router} from '@angular/router';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {map, Observable, startWith} from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {CommonModule} from '@angular/common';
 
 
@@ -63,7 +63,7 @@ export class AddPhotoComponent implements OnInit {
 
       this.filteredCategories = this.categoryControl.valueChanges.pipe(
         startWith(''),
-        map(value=> this._filterCategory(value || ''))
+        map(value => this._filterCategory(value || ''))
       )
     })
 
